@@ -38,6 +38,11 @@ struct ContentView: View {
             Button("Pick Video") {
                 showVideoPicker.toggle()
             }
+            
+            Button("Remove Picked Video") {
+                deleteFiled()
+            }
+            .padding(.top, 5)
         }
         .photosPicker(isPresented: $showVideoPicker, selection: $selectedItem, matching: .videos)
         .padding()
@@ -56,6 +61,17 @@ struct ContentView: View {
                     }
                 }
             }
+        }
+    }
+    
+    func deleteFiled() {
+        do {
+            if let pickedVideoURL {
+                try FileManager.default.removeItem(at: pickedVideoURL)
+                self.pickedVideoURL = nil
+            }
+        } catch {
+            print(error.localizedDescription)
         }
     }
 }
